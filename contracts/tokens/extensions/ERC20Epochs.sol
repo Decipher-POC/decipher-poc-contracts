@@ -74,6 +74,10 @@ contract ERC20Epochs is IERC20, IERC20Metadata {
         return _balances[_epoch.current()][account];
     }
 
+    function balanceOfEpoch(address account, uint epoch_) public view virtual returns (uint256) {
+        return _balances[epoch_][account];
+    }
+
     function epoch() public view virtual returns (uint256) {
         return _epoch.current();
     }
