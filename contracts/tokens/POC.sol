@@ -25,7 +25,16 @@ contract POC is ERC20Epochs, Ownable {
     }
 
     // Governance: Voting Weight
+    // - High weight on current epoch.
     function votingWeightOf(address account) public view returns (uint256) {
-        return balanceOf(account);
+        uint currentEpoch = epoch();
+        uint votingWeight = 0;
+
+        for (uint i = 0; i <= currentEpoch; i++) {
+            uint votingWeightOnEpoch = (1 + balanceOfEpoch(account, i)) / (1 + currentEpoch - i);
+            votingWeight += votingWeightOnEpoch;
+        }
+
+        return votingWeight;
     }
 }
