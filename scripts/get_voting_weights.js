@@ -9,15 +9,21 @@ async function main() {
     const poc = await POC.attach(deployed.POC.address);
 
     const currentEpoch = await poc.epoch();
-    console.log("Current Epoch is #${currentEpoch}.");
+    console.log(`Current Epoch is #${currentEpoch}.`);
 
-    signers.forEach(async (signer) => {
-        const pocWithSigner = await poc.connect(signer);
-        const balance = await poc.balanceOf(signer.address);
-        const votingWeight = await poc.votingWeightOf(signer.address);
 
-        console.log(`[Epoch #${currentEpoch}] Account ${signer.address} has ${balance} $POC, and ${votingWeight} Voting Weight.`);
-    });
+    for (const signer of signers) {
+        let balances = [];
+        let balance = 0;
+
+        for (let i = 0; i <= currentEpoch; i++) {
+            balance = await poc.balanceOfEpoch(signer.address, i);
+            balances.push(balance);
+        }
+        let votingWeight = await poc.votingWeightOf(signer.address);
+
+        console.log(`[Epoch #${currentEpoch}] Account ${signer.address} has ${balances} balances → ${votingWeight} Voting Weight.`);
+    }
 }
 
 
