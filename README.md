@@ -23,9 +23,17 @@ export PRIVATE_KEY=""
 ### Deploy on localhost([Hardhat Node](https://hardhat.org/hardhat-network/docs/overview)):
 
 ```shell
+$ npx hardhat node
+```
+
+```shell
 $ npx hardhat compile
 $ npx hardhat deploy
+```
+
+```shell
 $ npx hardhat run scripts/create_poc_holders.js --network localhost
+$ npx hardhat run scripts/get_voting_weights.js --network localhost
 ```
 
 ### Deploy on [Goerli](https://goerli.net/):
