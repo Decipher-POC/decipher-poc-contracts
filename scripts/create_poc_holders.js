@@ -8,13 +8,14 @@ async function main() {
     const POC = await hre.ethers.getContractFactory("POC");
     const poc = await POC.attach(deployed.POC.address);
 
-    const Auction = await hre.ethers.getContractFactory("POCAuction");
-    const auction = await Auction.attach(deployed.POCAuction.address);
-
     signers.forEach(async (signer) => {
+        await poc.mint(signer.address, 1000);
+
         const pocWithSigner = await poc.connect(signer);
         const balance = await poc.balanceOf(signer.address);
-        console.log(`Account ${signer.address} has ${balance} $POC`);
+        const votingWeight = await poc.balanceOf(signer.address);
+
+        console.log(`Account ${signer.address} has ${balance} $POC, and ${votingWeight} Voting Weight.`);
     });
 }
 

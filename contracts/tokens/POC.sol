@@ -23,4 +23,9 @@ contract POC is ERC20Epochs, Ownable {
     function decimals() public pure override returns (uint8) {
         return 0;
     }
+
+    // Governance: Voting Weight
+    function votingWeightOf(address account) public view returns (uint256) {
+        return balanceOf(account);
+    }
 }
